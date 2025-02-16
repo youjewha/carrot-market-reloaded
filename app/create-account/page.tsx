@@ -1,11 +1,11 @@
 "use client";
 
-import FormInput from "@/components/form-input";
-import FormButton from "@/components/form-btn";
+import Input from "@/components/input";
+import Button from "@/components/button";
 import SocialLogin from "@/components/social-login";
 import { useActionState } from "react";
 import { createAccount } from "./actions";
-
+import { PASSWORD_MIN_LENGTH } from "@/lib/constants";
 export default function CreateAccount() {
     const [state, action] = useActionState(createAccount, null);
     return (
@@ -15,35 +15,39 @@ export default function CreateAccount() {
                 <h2 className="text-xl">Fill in the form below to join</h2>
             </div>
             <form action={action} className="flex flex-col gap-3">
-                <FormInput
+                <Input
                 name="username"
                 type="text"
                 placeholder="Username"
                 required={true}
-                errors={state?.fieldErrors?.username}
+                error={state?.fieldErrors?.username}
+                minLength={3}
+                maxLength={10}
                 />
-                <FormInput
+                <Input
                 name="email"
                 type="email"
                 placeholder="Email"
                 required={true}
-                errors={state?.fieldErrors?.email}
+                error={state?.fieldErrors?.email}
                 />
-                <FormInput
+                <Input
                 name="password"
                 type="password"
                 placeholder="Password"
                 required={true}
-                errors={state?.fieldErrors?.password}
+                error={state?.fieldErrors?.password}
+                minLength={PASSWORD_MIN_LENGTH}
                 />
-                <FormInput
+                <Input
                 name="confirmPassword"
                 type="password"
                 placeholder="confirm password"
                 required={true}
-                errors={state?.fieldErrors?.confirmPassword}
+                error={state?.fieldErrors?.confirmPassword}
+                minLength={4}
                 />
-                <FormButton text="Create Account"/>
+                <Button text="Create Account"/>
             </form>
             <SocialLogin />
         </div>
